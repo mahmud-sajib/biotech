@@ -26,7 +26,7 @@ class OtuMetaTableAdmin(admin.ModelAdmin):
 
 class TaxonomicTableAdmin(admin.ModelAdmin):
     # Display columns in horizontal list
-    list_display = ('id', 'seq', 'kingdom', 'phylum', 'taconomy_class', 'order', 'family', 'genus', 'species')
+    list_display = ('id', 'seq', 'kingdom', 'phylum', 'taxonomy_class', 'order', 'family', 'genus', 'species')
     
     # Columns having links
     list_display_links = ('id', 'seq')

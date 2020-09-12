@@ -31,7 +31,7 @@ def home(request):
     #     group_queryset = MetaDataTable.objects.values('group')
     #     print(group_queryset)
 
-    
+    # Filter Operation
     queryset = None
 
     table_name = request.GET.get('table_name')
@@ -54,7 +54,22 @@ def home(request):
         pass
 
     
-    # q_join = OtuMetaTable.objects.select_related('country', 'country_state', 'city')
+    # Merge Operation
+    q_join_1 = None
+    q_join_2 = None
+    table_1 = request.GET.get('table_1')
+    table_2 = request.GET.get('table_2')
+    q_type = request.GET.get('q_type')
+
+    if table_1 == 'MetaTable' and table_2 == 'OtuTable' and q_type == 'Join':
+        q_join_1 = OtuMetaTable.objects.select_related('seq_id', 'sample_id')
+
+    elif table_1 == 'TaxonomicTable' and table_2 == 'OtuTable' and q_type == 'Join':
+        q_join_2 = TaxonomicTable.objects.select_related('seq')
+    
+    else:
+        pass
+
 
 
 
@@ -67,6 +82,9 @@ def home(request):
         # 'group_queryset':group_queryset
         # 'column_name':column_name,
         'queryset':queryset,
+        'q_join_1':q_join_1,
+        'q_join_2':q_join_2,
+        
     }
     
     

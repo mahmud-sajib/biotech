@@ -51,7 +51,7 @@ class TaxonomicTable(models.Model):
     seq = models.ForeignKey(OtuTable, on_delete=models.SET_NULL, null=True, related_name='taxonomics')
     kingdom = models.CharField(max_length=50)
     phylum = models.CharField(max_length=50)
-    taconomy_class = models.CharField(max_length=50)
+    taxonomy_class = models.CharField(max_length=50)
     order = models.CharField(max_length=50)
     family = models.CharField(max_length=50)
     genus = models.CharField(max_length=50)
