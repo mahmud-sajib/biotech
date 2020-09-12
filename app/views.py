@@ -5,37 +5,11 @@ from django.db.models import Count, Q
 # Create your views here.
 
 def home(request):
-    # queryset = None
-    # # diet_queryset = None
-    # group_queryset = None
-    
-
-    # search_query = request.GET.get('q')
-    # search_query = str(search_query).split(",")
-
-    # print(search_query)
-    # print(search_query[0])
-    # # print(search_query[1:2])
-    # print(search_query[-1])
-
-    
-    # if search_query[0] == 'sample':
-    #     queryset = MetaDataTable.objects.values('sample')
-    #     print(queryset)
-    
-    # # if search_query[1:2] == list('diet'):
-    # #     diet_queryset = MetaDataTable.objects.values('diet')
-    # #     print(diet_queryset)
-
-    # if search_query[-1] == list('group'):
-    #     group_queryset = MetaDataTable.objects.values('group')
-    #     print(group_queryset)
 
     # Filter Operation
     queryset = None
 
     table_name = request.GET.get('table_name')
-
     column_name = request.GET.get('column_name')
 
     if table_name == 'MetaTable':
@@ -57,6 +31,7 @@ def home(request):
     # Merge Operation
     q_join_1 = None
     q_join_2 = None
+    
     table_1 = request.GET.get('table_1')
     table_2 = request.GET.get('table_2')
     q_type = request.GET.get('q_type')
@@ -70,22 +45,37 @@ def home(request):
     else:
         pass
 
+    # Search Operation
+    search_queryset = None
 
+    search_term = request.GET.get('search_term')
 
-
-    
-    
-
+    if search_term == 'sample':
+        search_queryset = MetaDataTable.objects.values('sample')
+    elif search_term == 'group':
+        search_queryset = MetaDataTable.objects.values('group')
+    elif search_term == 'diet':
+        search_queryset = MetaDataTable.objects.values('diet')
+    elif search_term == 'seq':
+        search_queryset = OtuTable.objects.values('seq')
+    elif search_term == 'sa_1':
+        search_queryset = OtuTable.objects.values('sa_1')
+    elif search_term == 'sa_2':
+        search_queryset = OtuTable.objects.values('sa_2')
+    elif search_term == 'kingdom':
+        search_queryset = TaxonomicTable.objects.values('kingdom')
+    elif search_term == 'phylum':
+        search_queryset = TaxonomicTable.objects.values('phylum')
+    elif search_term == 'family':
+        search_queryset = TaxonomicTable.objects.values('family')
+    else:
+        pass
+        
     context = {
-        # 'queryset':queryset,
-        # # 'diet_queryset':diet_queryset,
-        # 'group_queryset':group_queryset
-        # 'column_name':column_name,
         'queryset':queryset,
         'q_join_1':q_join_1,
         'q_join_2':q_join_2,
-        
+        'search_queryset':search_queryset,  
     }
-    
     
     return render(request, 'index.html', context)

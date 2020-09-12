@@ -11,7 +11,7 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Icon -->
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/line-icons.css' %}">
-    
+
     <!-- Main Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
@@ -22,16 +22,17 @@
         <!-- Start filter area -->
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
+                <h1 class="text-center">Filter Operations</h1>
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
-    
+
                             <div class="form-group inputwithicon">
                                 <i class="lni-database"></i>
                                 <div class="select">
                                     <select name="table_name">
                                         <option selected="true" disabled="disabled">Select Table</option>
-        
+
                                         <option value="MetaTable">MetaTable</option>
                                         <option value="OtuTable">OtuTable</option>
                                         <option value="TaxonomicTable">TaxonomicTable</option>
@@ -54,140 +55,36 @@
                     </div>
 
                 </div>
-                <!-- {% for qs in queryset %}
-
-                    {% if qs.sample %}
-                    <ul>
-                        <li>{{ qs.sample }}</li>
-                    </ul>
-                    {% endif %}
-
-                    {% if qs.seq %}
-                    <ul>
-                        <li>{{ qs.seq }}</li>
-                    </ul>
-                    {% endif %}
-
-                    {% if qs.kingdom %}
-                    <ul>
-                        <li>{{ qs.kingdom }}</li>
-                    </ul>
-                    {% endif %}
-
-                {% endfor %} -->
-
+                
                 <!-- Start Filter result table -->
                 {% if queryset %}
-                    
-
-                        
-                        <table class="table table-bordered">
-                            <!-- <thead>
+                <table class="table table-bordered" id="table-filter">
+                    <tbody>
+                        {% for filter_query in queryset %}
+                            {% if filter_query.sample %}
                             <tr>
-                                <th scope="col">Sample</th>
+                                <td>{{ filter_query.sample }}</td>
                             </tr>
-                            </thead> -->
-                            <tbody>
-                            {% for filter_query in queryset %}
-                                {% if filter_query.sample %}
-                                <tr>
-                                    <td>{{ filter_query.sample }}</td>
-                                </tr>
-                                {% endif %}
-                                
-                                {% if filter_query.seq %}
-                                <tr>
-                                    <td>{{ filter_query.seq }}</td>
-                                </tr>
-                                {% endif %}
+                            {% endif %}
 
-                                {% if filter_query.kingdom %}
-                                <tr>
-                                    <td>{{ filter_query.kingdom }}</td>
-                                </tr>
-                                {% endif %}
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
-                        
-
-                        <!-- {% if filter_query.seq %}
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">Sequence</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                            {% if filter_query.seq %}
                             <tr>
                                 <td>{{ filter_query.seq }}</td>
                             </tr>
-                            </tbody>
-                        </table>
-                        {% endif %} -->
+                            {% endif %}
 
-                        <!-- {% if filter_query.kingdom %}
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">Sequence</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                            {% if filter_query.kingdom %}
                             <tr>
                                 <td>{{ filter_query.kingdom }}</td>
                             </tr>
-                            </tbody>
-                        </table>
-                        {% endif %} -->
-
-
-                    
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="button" class="btn btn-info" id="btn-filter" value="Download Pdf" />
                 {% endif %}
+                
                 <!-- End Filter result table -->
-                
-                
-                <!-- <form class="card card-sm">
-                    <div class="card-body row no-gutters align-items-center">
-                        
-                        
-                        <div class="col">
-                            <form action="{% url 'home' %}" class="dx-form dx-form-group-inputs">
-                                <input type="text" name="q" value="" class="form-control" placeholder="Search a column (e.g. sample, group, diet)">
-                                <button  type="submit" class="dx-btn dx-btn-lg">Search</button>
-                            </form>
-                            
-                        </div>
-                        
-                        
-                    </div>
-                </form> -->
-
-                <!-- {% for qs in queryset %}
-            <ul>
-                {% if qs.sample %}
-                <li>{{ qs.sample }}</li>
-                {% endif %}
-            </ul>
-            {% endfor %} -->
-
-                <!-- {% for dqs in diet_queryset %}
-            <ul>
-                {% if dqs.diet %}
-                <li>{{ dqs.diet }}</li>
-                {% endif %}
-            </ul>
-            {% endfor %} -->
-
-                <!-- {% for gqs in group_queryset %}
-            <ul>
-                {% if gqs.group %}
-                <li>{{ gqs.group }}</li>
-                {% endif %}
-            </ul>
-            {% endfor %} -->
-                <!--end of col-->
             </div>
         </div>
         <!-- End filter area -->
@@ -195,10 +92,11 @@
         <!-- Start merge area -->
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
+                <h1 class="text-center">Merge Operations</h1>
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
-    
+
                             <div class="form-group inputwithicon" id="merge">
                                 <i class="lni-database"></i>
                                 <div class="select">
@@ -223,7 +121,7 @@
                                 <div class="select">
                                     <select name="table_2">
                                         <option selected="true" disabled="disabled">Select Table 2</option>
-                                        <option value="OtuTable">OtuTable</option>  
+                                        <option value="OtuTable">OtuTable</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,78 +132,80 @@
 
                 <!-- Start Merge result table -->
                 {% if q_join_1 %}
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="table-merge1">
                     <thead>
-                      <tr>
-                        <th scope="col">Sequence</th>
-                        <th scope="col">Sa 1</th>
-                        <th scope="col">Sa 2</th>
-                        <th scope="col">Sa 3</th>
-                        <th scope="col">Sample</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Diet</th>
-                        <th scope="col">Cage</th>
-                        <th scope="col">Value</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Sequence</th>
+                            <th scope="col">Sa 1</th>
+                            <th scope="col">Sa 2</th>
+                            <th scope="col">Sa 3</th>
+                            <th scope="col">Sample</th>
+                            <th scope="col">Group</th>
+                            <th scope="col">Diet</th>
+                            <th scope="col">Cage</th>
+                            <th scope="col">Value</th>
+                        </tr>
                     </thead>
 
                     {% for merge_query in q_join_1 %}
                     <tbody>
-                      <tr>
-                        <td>{{ merge_query.seq_id.seq }}</td>
-                        <td>{{ merge_query.seq_id.sa_1 }}</td>
-                        <td>{{ merge_query.seq_id.sa_2 }}</td>
-                        <td>{{ merge_query.seq_id.sa_3 }}</td>
-                        <td>{{ merge_query.sample_id.sample }}</td>
-                        <td>{{ merge_query.sample_id.group }}</td>
-                        <td>{{ merge_query.sample_id.diet }}</td>
-                        <td>{{ merge_query.sample_id.cage }}</td>
-                        <td>{{ merge_query.value }}</td>
-                      </tr>
+                        <tr>
+                            <td>{{ merge_query.seq_id.seq }}</td>
+                            <td>{{ merge_query.seq_id.sa_1 }}</td>
+                            <td>{{ merge_query.seq_id.sa_2 }}</td>
+                            <td>{{ merge_query.seq_id.sa_3 }}</td>
+                            <td>{{ merge_query.sample_id.sample }}</td>
+                            <td>{{ merge_query.sample_id.group }}</td>
+                            <td>{{ merge_query.sample_id.diet }}</td>
+                            <td>{{ merge_query.sample_id.cage }}</td>
+                            <td>{{ merge_query.value }}</td>
+                        </tr>
                     </tbody>
                     {% endfor %}
 
                 </table>
+                <input type="button" class="btn btn-info" id="btn-merge1" value="Download Pdf" />
                 {% endif %}
                 <!-- End Merge result table -->
 
                 <!-- Start Merge result table -->
                 {% if q_join_2 %}
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="table-merge2">
                     <thead>
-                      <tr>
-                        <th scope="col">Sequence</th>
-                        <th scope="col">Sa 1</th>
-                        <th scope="col">Sa 2</th>
-                        <th scope="col">Sa 3</th>
-                        <th scope="col">Kingdom</th>
-                        <th scope="col">Phylum</th>
-                        <th scope="col">Class</th>
-                        <th scope="col">Order</th>
-                        <th scope="col">Family</th>
-                        <th scope="col">Genus</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Sequence</th>
+                            <th scope="col">Sa 1</th>
+                            <th scope="col">Sa 2</th>
+                            <th scope="col">Sa 3</th>
+                            <th scope="col">Kingdom</th>
+                            <th scope="col">Phylum</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Order</th>
+                            <th scope="col">Family</th>
+                            <th scope="col">Genus</th>
+                        </tr>
                     </thead>
 
                     {% for merge_query in q_join_2 %}
                     <tbody>
-                      <tr>
-                        <!-- <th scope="row">1</th> -->
-                        <td>{{ merge_query.seq.seq }}</td>
-                        <td>{{ merge_query.seq.sa_1 }}</td>
-                        <td>{{ merge_query.seq.sa_2 }}</td>
-                        <td>{{ merge_query.seq.sa_3 }}</td>
-                        <td>{{ merge_query.kingdom }}</td>
-                        <td>{{ merge_query.phylum }}</td>
-                        <td>{{ merge_query.taxonomy_class }}</td>
-                        <td>{{ merge_query.phylum }}</td>
-                        <td>{{ merge_query.genus }}</td>
-                        <td>{{ merge_query.species }}</td>
-                      </tr>
+                        <tr>
+                            <!-- <th scope="row">1</th> -->
+                            <td>{{ merge_query.seq.seq }}</td>
+                            <td>{{ merge_query.seq.sa_1 }}</td>
+                            <td>{{ merge_query.seq.sa_2 }}</td>
+                            <td>{{ merge_query.seq.sa_3 }}</td>
+                            <td>{{ merge_query.kingdom }}</td>
+                            <td>{{ merge_query.phylum }}</td>
+                            <td>{{ merge_query.taxonomy_class }}</td>
+                            <td>{{ merge_query.phylum }}</td>
+                            <td>{{ merge_query.genus }}</td>
+                            <td>{{ merge_query.species }}</td>
+                        </tr>
                     </tbody>
                     {% endfor %}
 
                 </table>
+                <input type="button" class="btn btn-info" id="btn-merge2" value="Download Pdf" />
                 {% endif %}
                 <!-- End Merge result table -->
 
@@ -313,13 +213,142 @@
         </div>
         <!-- End merge area -->
 
+        <!-- Start search area -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-12">
+                <h1 class="text-center">Search Operations</h1>
+                <!-- Start search bar -->
+                <div class="search-bar">
+                    <div class="search-inner">
+                        <form method="GET" class="search-form" action="{% url 'home' %}">
+                            <div class="form-group inputwithicon" id="search">
+                                <i class="lni-tag"></i>
+                                <input type="text" name="search_term" class="form-control" placeholder="Enter a MetaData table column (e.g. sample, group, diet)">
+                            </div>
+                            <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- End search bar -->
 
+                <!-- Start search result table -->
+                {% if search_queryset %}
+                <table class="table table-bordered">
+                    {% for search_query in search_queryset %}
+                    <tbody>
+                        {% if search_query.sample %}
+                        <tr>
+                            <td>{{ search_query.sample }}</td>
+                        </tr>
+                        {% endif %}
 
-        
+                        {% if search_query.group %}
+                        <tr>
+                            <td>{{ search_query.group }}</td>
+                        </tr>
+                        {% endif %}
 
-        
+                        {% if search_query.diet %}
+                        <tr>
+                            <td>{{ search_query.diet }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                <!-- End search result table -->
+            </div>
 
-        
+            <div class="col-12 col-md-12 col-lg-12">
+                <!-- Start search bar -->
+                <div class="search-bar">
+                    <div class="search-inner">
+                        <form method="GET" class="search-form" action="{% url 'home' %}">
+                            <div class="form-group inputwithicon" id="search">
+                                <i class="lni-tag"></i>
+                                <input type="text" name="search_term" class="form-control" placeholder="Enter a Otu table column (e.g. seq, sa_1, sa_2)">
+                            </div>
+                            <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- End search bar -->
+
+                <!-- Start search result table -->
+                {% if search_queryset %}
+                <table class="table table-bordered">
+                    {% for search_query in search_queryset %}
+                    <tbody>
+                        {% if search_query.seq %}
+                        <tr>
+                            <td>{{ search_query.seq }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if search_query.sa_1 %}
+                        <tr>
+                            <td>{{ search_query.sa_1 }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if search_query.sa_2 %}
+                        <tr>
+                            <td>{{ search_query.sa_2 }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                <!-- End search result table -->
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-12">
+                <!-- Start search bar -->
+                <div class="search-bar">
+                    <div class="search-inner">
+                        <form method="GET" class="search-form" action="{% url 'home' %}">
+                            <div class="form-group inputwithicon" id="search">
+                                <i class="lni-tag"></i>
+                                <input type="text" name="search_term" class="form-control" placeholder="Enter a Taxonomic table column (e.g. kingdom, phylum, family)">
+                            </div>
+                            <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- End search bar -->
+
+                <!-- Start search result table -->
+                {% if search_queryset %}
+                <table class="table table-bordered">
+                    {% for search_query in search_queryset %}
+                    <tbody>
+                        {% if search_query.kingdom %}
+                        <tr>
+                            <td>{{ search_query.kingdom }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if search_query.phylum %}
+                        <tr>
+                            <td>{{ search_query.phylum }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if search_query.family %}
+                        <tr>
+                            <td>{{ search_query.family }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                <!-- End search result table -->
+            </div>
+        </div>
+        <!-- End search area -->
     </div>
 
     <!-- JS, Popper.js, and jQuery -->
@@ -331,6 +360,60 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+    </script> 
+     
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script> 
+     
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script type="text/javascript">
+        $("body").on("click", "#btn-filter", function () {
+            html2canvas($('#table-filter')[0], {
+                dpi: 192,
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Filter-info.pdf");
+                }
+            });
+        });
+
+        $("body").on("click", "#btn-merge1", function () {
+            html2canvas($('#table-merge1')[0], {
+                dpi: 192,
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Merge-info.pdf");
+                }
+            });
+        });
+
+        $("body").on("click", "#btn-merge2", function () {
+            html2canvas($('#table-merge2')[0], {
+                dpi: 192,
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Merge-info.pdf");
+                }
+            });
+        });
     </script>
 </body>
 
