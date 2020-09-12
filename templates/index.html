@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Icon -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/line-icons.css' %}">
+    
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+    <div class="container">
+       
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="search-bar">
+                    <div class="search-inner">
+                        <form method="GET" class="search-form" action="{% url 'home' %}">
+    
+                            <div class="form-group inputwithicon">
+                                <i class="lni-database"></i>
+                                <div class="select">
+                                    <select name="table_name">
+                                        <option selected="true" disabled="disabled">Select Table</option>
+        
+                                        <option value="MetaTable">MetaTable</option>
+                                        <option value="OtuTable">OtuTable</option>
+                                        <option value="TaxonomicTable">TaxonomicTable</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group inputwithicon">
+                                <i class="lni-menu"></i>
+                                <div class="select">
+                                    <select name="column_name">
+                                        <option selected="true" disabled="disabled">Select Column</option>
+                                        <option value="Sample">Sample</option>
+                                        <option value="Seq">Seq</option>
+                                        <option value="Kingdom">Kingdom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search Now</button>
+                        </form>
+                    </div>
+
+                </div>
+                
+                
+                <!-- <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        
+                        
+                        <div class="col">
+                            <form action="{% url 'home' %}" class="dx-form dx-form-group-inputs">
+                                <input type="text" name="q" value="" class="form-control" placeholder="Search a column (e.g. sample, group, diet)">
+                                <button  type="submit" class="dx-btn dx-btn-lg">Search</button>
+                            </form>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                </form> -->
+
+                <!-- {% for qs in queryset %}
+            <ul>
+                {% if qs.sample %}
+                <li>{{ qs.sample }}</li>
+                {% endif %}
+            </ul>
+            {% endfor %} -->
+
+                <!-- {% for dqs in diet_queryset %}
+            <ul>
+                {% if dqs.diet %}
+                <li>{{ dqs.diet }}</li>
+                {% endif %}
+            </ul>
+            {% endfor %} -->
+
+                <!-- {% for gqs in group_queryset %}
+            <ul>
+                {% if gqs.group %}
+                <li>{{ gqs.group }}</li>
+                {% endif %}
+            </ul>
+            {% endfor %} -->
+                <!--end of col-->
+            </div>
+        </div>
+
+
+
+        {% for qs in queryset %}
+
+        {% if qs.sample %}
+        <ul>
+            <li>{{ qs.sample }}</li>
+        </ul>
+        {% endif %}
+
+        {% if qs.seq %}
+        <ul>
+            <li>{{ qs.seq }}</li>
+        </ul>
+        {% endif %}
+
+        {% if qs.kingdom %}
+        <ul>
+            <li>{{ qs.kingdom }}</li>
+        </ul>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

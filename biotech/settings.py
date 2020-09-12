@@ -55,7 +55,7 @@ ROOT_URLCONF = 'biotech.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,4 +118,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# Path to find static assets.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+# Location of project wide static assets.
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Location that holds user-uploaded files.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+# URL that handles the media files served from MEDIA_ROOT. 
+MEDIA_URL = '/images/'
+
