@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = 'an(p7ej24_v!t9iezvr=l9ncvo@bne8nsbglb#otfxd*#7fcvf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['biotechapp.herokuapp.com']
 
 
 # Application definition
@@ -129,3 +130,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # URL that handles the media files served from MEDIA_ROOT. 
 MEDIA_URL = '/images/'
 
+
+
+django_heroku.settings(locals())
