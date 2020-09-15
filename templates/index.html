@@ -23,14 +23,15 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Filter Operations</h1>
+                <!-- Start Filter form -->
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
-
                             <div class="form-group inputwithicon">
                                 <i class="lni-database"></i>
                                 <div class="select">
-                                    <select name="table_name">
+                                    <select id="table" name="table_name" onchange="chainedColumn()">
+                                        
                                         <option selected="true" disabled="disabled">Select Table</option>
 
                                         <option value="MetaTable">MetaTable</option>
@@ -42,48 +43,85 @@
                             <div class="form-group inputwithicon">
                                 <i class="lni-menu"></i>
                                 <div class="select">
-                                    <select name="column_name">
+                                    <select id="column" name="column_name">
                                         <option selected="true" disabled="disabled">Select Column</option>
-                                        <option value="Sample">Sample</option>
-                                        <option value="Seq">Seq</option>
-                                        <option value="Kingdom">Kingdom</option>
                                     </select>
                                 </div>
                             </div>
                             <button class="btn btn-common" type="submit"><i class="lni-search"></i>Filter</button>
                         </form>
                     </div>
-
                 </div>
-                
+                <!-- End Filter form -->
+
                 <!-- Start Filter result table -->
                 {% if queryset %}
                 <table class="table table-bordered" id="table-filter">
                     <tbody>
                         {% for filter_query in queryset %}
-                            {% if filter_query.sample %}
-                            <tr>
-                                <td>{{ filter_query.sample }}</td>
-                            </tr>
-                            {% endif %}
 
-                            {% if filter_query.seq %}
-                            <tr>
-                                <td>{{ filter_query.seq }}</td>
-                            </tr>
-                            {% endif %}
+                        <!-- Metatable result -->
+                        {% if filter_query.sample %}
+                        <tr>
+                            <td>{{ filter_query.sample }}</td>
+                        </tr>
+                        {% endif %}
 
-                            {% if filter_query.kingdom %}
-                            <tr>
-                                <td>{{ filter_query.kingdom }}</td>
-                            </tr>
-                            {% endif %}
+                        {% if filter_query.group %}
+                        <tr>
+                            <td>{{ filter_query.group }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if filter_query.diet %}
+                        <tr>
+                            <td>{{ filter_query.diet }}</td>
+                        </tr>
+                        {% endif %}
+
+                        <!-- Otutable result -->
+                        {% if filter_query.seq %}
+                        <tr>
+                            <td>{{ filter_query.seq }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if filter_query.sa_1 %}
+                        <tr>
+                            <td>{{ filter_query.sa_1 }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if filter_query.sa_2 %}
+                        <tr>
+                            <td>{{ filter_query.sa_2 }}</td>
+                        </tr>
+                        {% endif %}
+
+                        <!-- Taxonomictable result -->
+                        {% if filter_query.kingdom %}
+                        <tr>
+                            <td>{{ filter_query.kingdom }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if filter_query.phylum %}
+                        <tr>
+                            <td>{{ filter_query.phylum }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if filter_query.family %}
+                        <tr>
+                            <td>{{ filter_query.family }}</td>
+                        </tr>
+                        {% endif %}
+
                         {% endfor %}
                     </tbody>
                 </table>
                 <input type="button" class="btn btn-info" id="btn-filter" value="Download Pdf" />
                 {% endif %}
-                
                 <!-- End Filter result table -->
             </div>
         </div>
@@ -93,10 +131,10 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Merge Operations</h1>
+                <!-- Start Merge form -->
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
-
                             <div class="form-group inputwithicon" id="merge">
                                 <i class="lni-database"></i>
                                 <div class="select">
@@ -129,8 +167,8 @@
                         </form>
                     </div>
                 </div>
-
-                <!-- Start Merge result table -->
+                <!-- End Merge form -->
+                <!-- Start Merge result table 1 -->
                 {% if q_join_1 %}
                 <table class="table table-bordered" id="table-merge1">
                     <thead>
@@ -162,13 +200,12 @@
                         </tr>
                     </tbody>
                     {% endfor %}
-
                 </table>
                 <input type="button" class="btn btn-info" id="btn-merge1" value="Download Pdf" />
                 {% endif %}
-                <!-- End Merge result table -->
+                <!-- End Merge result table 1 -->
 
-                <!-- Start Merge result table -->
+                <!-- Start Merge result table 2 -->
                 {% if q_join_2 %}
                 <table class="table table-bordered" id="table-merge2">
                     <thead>
@@ -207,8 +244,7 @@
                 </table>
                 <input type="button" class="btn btn-info" id="btn-merge2" value="Download Pdf" />
                 {% endif %}
-                <!-- End Merge result table -->
-
+                <!-- End Merge result table 2-->
             </div>
         </div>
         <!-- End merge area -->
@@ -217,21 +253,22 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Search Operations</h1>
-                <!-- Start search bar -->
+                <!-- Start Metatable search bar -->
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
                             <div class="form-group inputwithicon" id="search">
                                 <i class="lni-tag"></i>
-                                <input type="text" name="search_term" class="form-control" placeholder="Enter a MetaData table column (e.g. sample, group, diet)">
+                                <input type="text" name="search_term" class="form-control"
+                                    placeholder="Enter a MetaData table column (e.g. sample, group, diet)">
                             </div>
                             <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
                         </form>
                     </div>
                 </div>
-                <!-- End search bar -->
+                <!-- End Metatable search bar -->
 
-                <!-- Start search result table -->
+                <!-- Start Metatable search result table -->
                 {% if search_queryset %}
                 <table class="table table-bordered">
                     {% for search_query in search_queryset %}
@@ -257,25 +294,26 @@
                     {% endfor %}
                 </table>
                 {% endif %}
-                <!-- End search result table -->
+                <!-- End Metatable search result table -->
             </div>
 
             <div class="col-12 col-md-12 col-lg-12">
-                <!-- Start search bar -->
+                <!-- Start Otutable search bar -->
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
                             <div class="form-group inputwithicon" id="search">
                                 <i class="lni-tag"></i>
-                                <input type="text" name="search_term" class="form-control" placeholder="Enter a Otu table column (e.g. seq, sa_1, sa_2)">
+                                <input type="text" name="search_term" class="form-control"
+                                    placeholder="Enter a Otu table column (e.g. seq, sa_1, sa_2)">
                             </div>
                             <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
                         </form>
                     </div>
                 </div>
-                <!-- End search bar -->
+                <!-- End Otutable search bar -->
 
-                <!-- Start search result table -->
+                <!-- Start Otutable search result table -->
                 {% if search_queryset %}
                 <table class="table table-bordered">
                     {% for search_query in search_queryset %}
@@ -301,25 +339,26 @@
                     {% endfor %}
                 </table>
                 {% endif %}
-                <!-- End search result table -->
+                <!-- End Otutable search result table -->
             </div>
 
             <div class="col-12 col-md-12 col-lg-12">
-                <!-- Start search bar -->
+                <!-- Start Taxonomictable search bar -->
                 <div class="search-bar">
                     <div class="search-inner">
                         <form method="GET" class="search-form" action="{% url 'home' %}">
                             <div class="form-group inputwithicon" id="search">
                                 <i class="lni-tag"></i>
-                                <input type="text" name="search_term" class="form-control" placeholder="Enter a Taxonomic table column (e.g. kingdom, phylum, family)">
+                                <input type="text" name="search_term" class="form-control"
+                                    placeholder="Enter a Taxonomic table column (e.g. kingdom, phylum, family)">
                             </div>
                             <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search</button>
                         </form>
                     </div>
                 </div>
-                <!-- End search bar -->
+                <!-- End Taxonomictable search bar -->
 
-                <!-- Start search result table -->
+                <!-- Start Taxonomictable search result table -->
                 {% if search_queryset %}
                 <table class="table table-bordered">
                     {% for search_query in search_queryset %}
@@ -345,7 +384,7 @@
                     {% endfor %}
                 </table>
                 {% endif %}
-                <!-- End search result table -->
+                <!-- End Taxonomictable search result table -->
             </div>
         </div>
         <!-- End search area -->
@@ -355,18 +394,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-    </script> 
-     
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script> 
-     
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js">
+    </script>
 
     <script type="text/javascript">
+
+        // Download filter operation table
         $("body").on("click", "#btn-filter", function () {
             html2canvas($('#table-filter')[0], {
                 dpi: 192,
@@ -383,6 +426,7 @@
             });
         });
 
+        // Download merge operation table(1)
         $("body").on("click", "#btn-merge1", function () {
             html2canvas($('#table-merge1')[0], {
                 dpi: 192,
@@ -399,6 +443,7 @@
             });
         });
 
+        // Download merge operation table(2)
         $("body").on("click", "#btn-merge2", function () {
             html2canvas($('#table-merge2')[0], {
                 dpi: 192,
@@ -414,6 +459,35 @@
                 }
             });
         });
+
+        // Dependent Column list dropdown
+        function chainedColumn()
+        {
+            var tbl_input=document.getElementById("table").value;
+
+            if(tbl_input==="MetaTable")
+            {
+                var arr=["Sample","Group","Diet"];
+            }
+            else if(tbl_input==="OtuTable")
+            {
+                var arr=["Seq","Sa1","Sa2"];
+            }
+            else
+            {
+                var arr=["Kingdom", "Phylum", "Family"]
+            }
+         
+            var string="";
+         
+            for(i=0;i<arr.length;i++)
+            {
+                string=string+"<option value="+arr[i]+">"+arr[i]+"</option>";
+            }
+
+            document.getElementById("column").innerHTML=string;
+        }
+        
     </script>
 </body>
 

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+# MetaDataTable Model
 class MetaDataTable(models.Model):
     sample = models.CharField(max_length=50)
     index_1 = models.CharField(max_length=50)
@@ -16,6 +17,7 @@ class MetaDataTable(models.Model):
         return self.sample
 
 
+# OtuTable Model
 class OtuTable(models.Model):
     seq = models.CharField(max_length=100, null=True)
     sa_1 = models.CharField(max_length=50, null=True)
@@ -38,6 +40,7 @@ class OtuTable(models.Model):
     def __str__(self):
         return self.seq
 
+# OtuMetaTable Model
 class OtuMetaTable(models.Model):
     seq_id = models.ForeignKey(OtuTable, on_delete=models.SET_NULL, null=True)
     sample_id = models.ForeignKey(MetaDataTable, on_delete=models.SET_NULL, null=True)
@@ -46,7 +49,7 @@ class OtuMetaTable(models.Model):
     def __str__(self):
         return f"{self.seq_id} | {self.sample_id}" 
 
-
+# TaxonomicTable Model
 class TaxonomicTable(models.Model):
     seq = models.ForeignKey(OtuTable, on_delete=models.SET_NULL, null=True, related_name='taxonomics')
     kingdom = models.CharField(max_length=50)
