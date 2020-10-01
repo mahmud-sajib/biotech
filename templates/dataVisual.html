@@ -1,0 +1,461 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Tech</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Icon -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/line-icons.css' %}">
+
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Start filter area -->
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-12 col-lg-12">
+        <h1> Filter Operations </h1>
+
+        <!-- Start filter form -->
+
+        <div class="search-bar">
+          <div class="search-inner">
+            <form class="search-form" action="{% url 'dataVisual' %}" method="GET">
+
+                <!--here select table field -->
+
+              <div class="form-group inputwithicon">
+                <i class="lni-database"></i>
+                <div class="select">
+                  <select id="table" name="table_name" onchange="chainedColumn()"> <!-- "table_name" from views.py -->
+
+                    <option selected="true" disabled="disabled">Select Table</option>
+
+                    <option value="Meta_Table">Meta_Table</option> <!--Table name from views.py -->
+                    <option value="OtuTable">OtuTable</option>
+                    <option value="Taxonomic_Table">Taxonomic_Table</option>
+                  </select>
+                </div>
+              </div>
+
+            <!-- here select column field -->
+
+              <div class="form-group inputwithicon">
+                <i class="lni-menu"></i>
+                <div class="select">
+                    <select id="column" name="column_name"> <!-- "column_name" from views.py -->
+                        <option selected="true" disabled="disabled">Select Column</option>
+                    </select>
+              </div>
+            </div>
+              <button class="btn btn-common" type="submit"><i class="lni-search"></i>Filter</button>
+            </form>
+        </div>
+      </div>
+      <!-- End Filter form  -->
+
+<!--#################################################################################################################################-->
+
+      <!-- Start Filter result table -->
+      {% if queryset %}
+      <table class="table table-bordered" id="table-filter">
+        <tbody>
+            {% for filter_query in queryset %}
+            <!--metatable result-->
+            <!--############################################-->
+
+            <!--metatable result-->
+
+            {% if filter_query.sample %} <!-- sample name from views.py -->
+            <tr>
+              <td>{{ filter_query.sample }}</td>
+            </tr>
+            {% endif %}
+
+              <!--Index_1 result-->
+            {% if filter_query.Index_1 %}
+            <tr>
+              <td>{{ filter_query.Index_1 }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Index_2 result-->
+
+            {% if filter_query.Index_2 %}
+            <tr>
+              <td>{{ filter_query.Index_2 }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Group result-->
+
+            {% if filter_query.Group %}
+            <tr>
+              <td>{{ filter_query.Group }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Diet result-->
+
+            {% if filter_query.Diet %}
+            <tr>
+             <td>{{ filter_query.Diet }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Cage result-->
+
+            {% if filter_query.Cage %}
+            <tr>
+              <td>{{ filter_query.Cage }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Type result-->
+            {% if filter_query.Type %}
+            <tr>
+              <td>{{ filter_query.Type }}</td>
+            </tr>
+            {% endif %}
+
+            <!--Origin Diet result-->
+
+            {% if filter_query.Orgin_Diet %}
+            <tr>
+              <td>{{ filter_query.Orgin_Diet }}</td>
+            </tr>
+            {% endif %}
+
+           <!--otu result-->
+           <!--############################################-->
+
+           {% if filter_query.hash %}
+           <tr>
+             <td>{{ filter_query.hash }}</td>
+           </tr>
+           {% endif %}
+
+           {% if filter_query.sa_5594 %}
+           <tr>
+             <td>{{ filter_query.sa_5594 }}</td>
+           </tr>
+           {% endif %}
+
+           {% if filter_query.sa_5902 %}
+           <tr>
+             <td>{{ filter_query.sa_5902 }}</td>
+           </tr>
+           {% endif %}
+
+           <!--taxonomic result-->
+           <!--############################################-->
+
+           {% if filter_query.Kingdom %}
+           <tr>
+             <td>{{ filter_query.Kingdom }}</td>
+           </tr>
+           {% endif %}
+
+           {% if filter_query.Phylum %}
+           <tr>
+             <td>{{ filter_query.Phylum }}</td>
+           </tr>
+           {% endif %}
+
+           {% if filter_query.Family %}
+           <tr>
+             <td>{{ filter_query.Family }}</td>
+           </tr>
+           {% endif %}
+
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="button" class="btn btn-info"  id="btn-filter" value="Download CSV" />
+      {% endif %}
+
+      <!-- End Filter result table -->
+
+    </div>
+  </div>
+
+ <!-- End Filter area -->
+<!--#################################################################################################################################-->
+
+
+ <!-- Start merge area -->
+ <div class="row justify-content-center">
+    <div class="col-12 col-md-12 col-lg-12">
+        <h1 class="text-center">Merge Operations</h1>
+
+        <!-- Start Merge form -->
+        <div class="search-bar">
+            <div class="search-inner">
+               <form method="GET" class="search-form" action="{% url 'dataVisual' %}">
+                  <div class="form-group inputwithicon" id="merge">
+                    <i class="lni-database"></i>
+                    <div class="select">
+                      <select name="table_1">
+                         <option selected="true" disabled="disabled">Select Table 1</option>
+                         <option value="Meta_Table">Meta_Table</option>
+                         <option value="Taxonomic_Table">Taxonomic_Table</option>
+                      </select>
+                   </div>
+                 </div>
+                 <div class="form-group inputwithicon" id="merge">
+                     <i class="lni-select"></i>
+                     <div class="select">
+                         <select name="q_type">
+                           <option selected="true" disabled="disabled">Select Query</option>
+                           <option value="Join">Join</option>
+                         </select>
+                     </div>
+                 </div>
+                 <div class="form-group inputwithicon id="merge">
+                   <i class="lni-database"></i>
+                   <div class="select">
+                     <select name="table_2">
+                         <option selected="true" disabled="disabled">Select Table 2</option>
+                         <option value="OtuTable">OtuTable</option>
+                     </select>
+                   </div>
+                  </div>
+                 <button class="btn btn-common" type="submit"><i class="lni-search"></i>Merge</button>
+               </form>
+           </div>
+         </div>
+
+       <!-- End Merge form -->
+
+<!--#################################################################################################################################-->
+       <!-- Start Merge result table 1 -->
+       {% if q_join_1 %}
+       <table class="table-bordered" id="table-merge1">
+        <thead>
+           <tr>
+             <th scope="col">Hash</th>
+             <th scope="col">Sample</th>
+             <th scope="col">value</th>
+           </tr>
+        </thead>
+
+       {% for merge_query in q_join_1 %}
+      <tbody>
+         <tr>
+           <td>{{ merge_query.otu_hash.hash }}</td>
+           <td>{{ merge_query.meta_hash.sample }}</td>
+           <td>{{ merge_query.value }}</td>
+         </tr>
+      </tbody>
+     {% endfor %}
+
+     </table>
+     <input type="button" class="btn btn-info" id="btn-merge1" value="Download CSV" />
+     {% endif %}
+
+  <!-- End Merge result table 1 -->
+
+  <!-- Start Merge result table 2 -->
+      {% if q_join_2 %}
+      <table class="table table-bordered" id="table-merge2">
+      <thead>
+          <tr>
+             <th scope="col">hash</th>
+             <th scope="col">Kingdom</th>
+          </tr>
+      </thead>
+
+      {% for merge_query in q_join_2 %}
+      <tbody>
+          <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{ merge_query.hash.hash }}</td>
+            <td>{{ merge_query.Kingdom }}</td>
+          </tr>
+      </tbody>
+      {% endfor %}
+
+    </table>
+    <input type="button" class="btn btn-info" id="btn-merge2" value="Download Pdf" />
+    {% endif %}
+    <!-- End Merge result table 2-->
+  </div>
+</div>
+
+   <!-- End merge area -->
+
+<!--####################################-->
+
+  <!-- Start search area -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-12 col-lg-12">
+       <h1 class="text-center">Search Operation</h1>
+       <!-- Start Metatable search bar -->
+       <div class="search-bar">
+          <div class="search-inner">
+             <form method="GET" class="search-form" action="{% url 'dataVisual' %}">
+               <div class="form-group inputwithicon" id="search">
+                  <i class="lni-tag"></i>
+                  <input type="text" name="search_term" class="form-control" placeholder="Enter a column name ... ">
+              </div>
+              <button class="btn btn-common" type="submit"><i class="lni-search"></i>Search</button>
+            </form>
+         </div>
+       </div>
+      <!-- End Metatable search bar -->
+
+     <!-- Start Metatable search result table -->
+
+     {% if search_queryset %}
+     <table class="table table-border">
+       {% for search_query in search_queryset %}
+       <tbody>
+         <!-- MetaData -->
+          {% if search_query.sample %}
+          <tr>
+            <td>{{ search_query.sample }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Index_1 %}
+          <tr>
+            <td>{{ search_query.Index_1 }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Index_2 %}
+          <tr>
+            <td>{{ search_query.Index_2 }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Group %}
+          <tr>
+            <td>{{ search_query.Group }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Diet %}
+          <tr>
+            <td>{{ search_query.Diet }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Cage %}
+          <tr>
+            <td>{{ search_query.Cage }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Type %}
+          <tr>
+            <td>{{ search_query.Type }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.Orgin_Diet %}
+          <tr>
+            <td>{{ search_query.Orgin_Diet }}</td>
+          </tr>
+          {% endif %}
+
+          <!-- OTUData -->
+          {% if search_query.hash %}
+          <tr>
+            <td>{{ search_query.hash }}</td>
+          </tr>
+          {% endif %}
+
+          {% if search_query.sa_5594 %}
+          <tr>
+            <td>{{ search_query.sa_5594 }}</td>
+          </tr>
+          {% endif %}
+
+       </tbody>
+       {% endfor %}
+     </table>
+     {% endif %}
+
+   <!-- End Metatable search result table -->
+  </div>
+ </div>
+
+</div>
+<!--JS, Popper.js, and jQuery-->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js">
+
+</script>
+
+<script type="text/javascript">
+
+//Download filter Operation table
+
+$("body").on("click", "btn-filter", function () {
+  html2canvas($('#table-filter')[0], {
+    dpi: 192,
+    onrendered: function (canvas) {
+      var data = canvas.toDataURL();
+      var docDefinition = {
+          content: [{
+              image: data,
+              width: 500
+          }]
+      };
+      pdfMake.createPdf(docDefinition).download("Filter-info.pdf");
+
+    }
+  });
+});
+
+
+
+
+
+// Dependent Column list dropdown
+function chainedColumn()
+{
+  var tbl_input=document.getElementById("table").value;
+
+  if(tbl_input==="Meta_Table") //here data from views.py
+  {
+      var arr=["Sample","Index_1","Index_2","Group", "Diet","Cage","Type","Orgin_Diet"];
+  }
+  else if(tbl_input==="OtuTable") //here data from views.py
+  {
+      var arr=["hash", "sa_5594", "sa_5902"];
+  }
+  else
+  {
+      var arr=["Kingdom", "Phylum", "Family"];
+  }
+
+  var string="";
+
+  for(i=0;i<arr.length;i++)
+  {
+    string=string+"<option value="+arr[i]+">"+arr[i]+"</option>";
+  }
+
+  document.getElementById("column").innerHTML=string;
+}
+
+  </script>
+</body>
